@@ -25,12 +25,8 @@ deck = "Chinese" # This is my top level deck and includes several lower level on
 def get_mature_cards():
     print('Calculating amount of learned words...')
     amount = 0
-    cards = invoke('findCards', query='deck:' + deck)
-    result = invoke("cardsInfo", cards=cards)
-    for card in result:
-        if card.get('interval') >= 21: # A mature card is one that has an interval of 21 days or greater (https://apps.ankiweb.net/docs/manual.html#types-of-cards)
-            amount += 1
-    return amount
+    cards = invoke('findCards', query='prop:ivl>=21 deck:' + deck)
+    return len(cards)
 
 def today_reps():
     print('Calculating todays reps...')
